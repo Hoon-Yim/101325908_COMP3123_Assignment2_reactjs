@@ -1,10 +1,18 @@
+// Modules
 import React from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+
+// CSS
+import "bootstrap/dist/css/bootstrap.min.css";
+
+// Components
+import { Navbar, Container } from "react-bootstrap";
 
 export default function Header() {
     return (
-        <Router>
-            <Link to='/about'>About</Link>
-        </Router>
+        <Navbar bg="light" expand="lg">
+            <Container>
+                <Navbar.Brand href="#">COMP3123 Assignment2</Navbar.Brand>
+            </Container>
+        </Navbar>
     );
 }
