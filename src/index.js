@@ -5,9 +5,6 @@ import ReactDOM from 'react-dom/client';
 // Pages
 import Login from "./pages/login";
 
-// CSS
-import './index.css';
-
 // Components
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/header";
