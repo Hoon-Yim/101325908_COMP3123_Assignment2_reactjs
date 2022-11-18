@@ -13,10 +13,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <Header />
-        <BrowserRouter>
-            <Routes>
-                <Route path="login" element={<Login />} />
-            </Routes>
-        </BrowserRouter>
-    </React.StrictMode>
+        <div className="d-flex justify-content-center align-items-center" style={{ height: "80vh" }} >
+            <BrowserRouter>
+                <Routes>
+                    <Route path="login" element={<Login />} />
+                </Routes>
+            </BrowserRouter>
+        </div>
+    </React.StrictMode >
 );
