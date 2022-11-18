@@ -5,7 +5,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // Components
-import { Card, Form, Button, Stack } from "react-bootstrap";
+import { Card, Form, Button, Stack, Row, Col } from "react-bootstrap";
 
 export default function Login() {
     return (
@@ -27,9 +27,14 @@ export default function Login() {
                         id="password_input"
                         type="password" />
                 </Form.Group>
-
-                <Button className="mt-3" variant="success" type="submit">Log In</Button>
-                <Button href="signup" variant="secondary">Sign Up</Button>
+                <Row className="mt-3">
+                    <Col>
+                        <Button href="signup" variant="secondary" style={{ width: "100%" }}>Sign Up</Button>
+                    </Col>
+                    <Col>
+                        <Button variant="success" type="submit" style={{ width: "100%" }}>Log In</Button>
+                    </Col>
+                </Row>
             </Stack>
         </Card >
     );
