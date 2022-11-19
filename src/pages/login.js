@@ -1,6 +1,7 @@
 // Modules
 import React from "react";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 // CSS
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -8,18 +9,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Components
 import { Card, Form, Button, Stack, Row, Col } from "react-bootstrap";
 
-function handleLogIn(event) {
-    event.preventDefault();
-
-    axios.post("https://comp3123-backend.herokuapp.com/api/user/login", {
-        email: event.target.email_input.value,
-        password: event.target.password_input.value
-    }).then(res => {
-        console.log(res);
-    });
-}
-
 export default function Login() {
+    function handleLogIn(event) {
+        event.preventDefault();
+
+        const cookies = new Cookies();
+
+        axios.post("https://comp3123-backend.herokuapp.com/api/user/login", {
+            email: event.target.email_input.value,
+            password: event.target.password_input.value,
+        }).then(res => {
+            cookies.set("jwt", res.data.token, { path: '/' });
+        });
+    }
+
     return (
         <Card style={{ width: "25rem", padding: "30px 20px" }}>
             <Stack gap={3}>
