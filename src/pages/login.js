@@ -1,5 +1,6 @@
 // Modules
 import React from "react";
+import axios from "axios";
 
 // CSS
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,12 +8,23 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Components
 import { Card, Form, Button, Stack, Row, Col } from "react-bootstrap";
 
+function handleLogIn(event) {
+    event.preventDefault();
+
+    axios.post("https://comp3123-backend.herokuapp.com/api/user/login", {
+        email: event.target.email_input.value,
+        password: event.target.password_input.value
+    }).then(res => {
+        console.log(res);
+    });
+}
+
 export default function Login() {
     return (
         <Card style={{ width: "25rem", padding: "30px 20px" }}>
             <Stack gap={3}>
-                <Card.Title style={{ "margin-bottom": "20px" }}>Log In</Card.Title>
-                <form>
+                <Card.Title className="mb-3">Log In</Card.Title>
+                <form onSubmit={handleLogIn}>
                     <Form.Group>
                         <Form.Label htmlFor="email_input">Email</Form.Label>
                         <Form.Control
