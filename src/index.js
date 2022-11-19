@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 
 // Pages
 import Login from "./pages/login";
+import Employees from "./pages/employees";
 
 // Components
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -16,6 +17,7 @@ root.render(
         <div className="d-flex justify-content-center align-items-center" style={{ height: "80vh" }} >
             <BrowserRouter>
                 <Routes>
+                    <Route path="" element={<Employees />} />
                     <Route path="login" element={<Login />} />
                 </Routes>
             </BrowserRouter>
