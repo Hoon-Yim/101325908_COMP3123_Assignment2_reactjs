@@ -27,7 +27,7 @@ export default function Login(props) {
             setIsValid(true);
             cookies.set("jwt", res.data.token, { path: '/' });
             navigate('/', { isAuthenticated: isValid });
-            props.sendAuthenticationState();
+            props.sendAuthenticationState(res.data.user);
         }).catch(error => {
             setIsValid(false);
             setMessage(error.response.data.message);

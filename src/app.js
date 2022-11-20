@@ -17,25 +17,26 @@ export default function App() {
     const [user, setUser] = useState({});
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-        axios.get("https://comp3123-backend.herokuapp.com/api/user/get_logged_in_user", {
-            headers: { "Authorization": `Bearer ${jwt}` }
-        }).then(res => {
-            setUser(res.data.user);
-            setIsAuthenticated(true);
-        }).catch(error => {
-            setIsAuthenticated(false);
-        });
-    }, []);
+    // useEffect(() => {
+    //     axios.get("https://comp3123-backend.herokuapp.com/api/user/get_logged_in_user", {
+    //         headers: { "Authorization": `Bearer ${jwt}` }
+    //     }).then(res => {
+    //         setUser(res.data.user);
+    //         setIsAuthenticated(true);
+    //     }).catch(error => {
+    //         setIsAuthenticated(false);
+    //     });
+    // }, []);
 
-    function getAuthenticationState() {
+    function getAuthenticationState(user) {
+        setUser(user);
         setIsAuthenticated(!isAuthenticated);
     }
 
     return(
         <div>
             <BrowserRouter>
-                <Header user={user} isAuthenticated={isAuthenticated} />
+                <Header user={user} isAuthenticated={isAuthenticated} sendAuthenticationState={getAuthenticationState} />
                 <div className="d-flex justify-content-center align-items-center" style={{ height: "80vh" }} >
                     <Routes>
                         <Route path="/" element={isAuthenticated && <EmployeeList />} />

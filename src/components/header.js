@@ -1,5 +1,5 @@
 // Modules
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // CSS
@@ -17,7 +17,8 @@ export default function Header(props) {
         event.preventDefault();
 
         cookies.set("jwt", "loggedout", { path: '/' });
-        navigate('/');
+        props.sendAuthenticationState();
+        navigate('/login');
     }
     
     return (
