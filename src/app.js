@@ -28,14 +28,18 @@ export default function App() {
         });
     }, []);
 
-    return (
+    function getAuthenticationState() {
+        setIsAuthenticated(!isAuthenticated);
+    }
+
+    return(
         <div>
             <BrowserRouter>
                 <Header user={user} isAuthenticated={isAuthenticated} />
                 <div className="d-flex justify-content-center align-items-center" style={{ height: "80vh" }} >
                     <Routes>
                         <Route path="/" element={isAuthenticated && <EmployeeList />} />
-                        <Route path="/login" element={<Login />} />
+                        <Route path="/login" element={<Login sendAuthenticationState={getAuthenticationState} />} />
                     </Routes>
                 </div>
             </BrowserRouter>

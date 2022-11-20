@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Components
 import { Table, Container, Button, Stack } from "react-bootstrap";
 
-export default function Employees() {
+export default function Employees(props) {
     const cookies = new Cookies();
 
     const [jwt, setJwt] = useState(cookies.get("jwt"));
@@ -19,9 +19,10 @@ export default function Employees() {
         axios.get("https://comp3123-backend.herokuapp.com/api/emp/employees", {
             headers: { "Authorization": `Bearer ${jwt}` }
         }).then(res => {
+            console.log(res);
             setEmployees(res.data.employees);
         });
-    }, []);
+    }, [])
 
     function generateActionButtons() {
         return (

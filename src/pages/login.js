@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Components
 import { Card, Form, Button, Stack, Row, Col, Alert } from "react-bootstrap";
 
-export default function Login() {
+export default function Login(props) {
     const [isValid, setIsValid] = useState(true);
     const [message, setMessage] = useState("");
 
@@ -26,7 +26,8 @@ export default function Login() {
         }).then(res => {
             setIsValid(true);
             cookies.set("jwt", res.data.token, { path: '/' });
-            navigate('/');
+            navigate('/', { isAuthenticated: isValid });
+            props.sendAuthenticationState();
         }).catch(error => {
             setIsValid(false);
             setMessage(error.response.data.message);
