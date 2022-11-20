@@ -1,5 +1,5 @@
 // Modules
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 
@@ -7,27 +7,37 @@ import Cookies from "universal-cookie";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // Components
-import { Card, Form, Button, Stack, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Card, Form, Button, Stack, Row, Col, Alert } from "react-bootstrap";
 
 export default function Login() {
+    const [isValid, setIsValid] = useState(true);
+    const [message, setMessage] = useState("");
+
+    const cookies = new Cookies();
+    const navigate = useNavigate();
+
     function handleLogIn(event) {
         event.preventDefault();
-
-        const cookies = new Cookies();
 
         axios.post("https://comp3123-backend.herokuapp.com/api/user/login", {
             email: event.target.email_input.value,
             password: event.target.password_input.value,
         }).then(res => {
+            setIsValid(true);
             cookies.set("jwt", res.data.token, { path: '/' });
+            navigate('/');
+        }).catch(error => {
+            setIsValid(false);
+            setMessage(error.response.data.message);
         });
     }
 
     return (
         <Card style={{ width: "25rem", padding: "30px 20px" }}>
-            <Stack gap={3}>
-                <Card.Title className="mb-3">Log In</Card.Title>
-                <form onSubmit={handleLogIn}>
+            <Card.Title className="mb-3">Log In</Card.Title>
+            <form onSubmit={handleLogIn}>
+                <Stack gap={3}>
                     <Form.Group>
                         <Form.Label htmlFor="email_input">Email</Form.Label>
                         <Form.Control
@@ -42,16 +52,23 @@ export default function Login() {
                             id="password_input"
                             type="password" />
                     </Form.Group>
-                    <Row className="mt-3">
-                        <Col>
-                            <Button href="signup" variant="secondary" style={{ width: "100%" }}>Sign Up</Button>
-                        </Col>
-                        <Col>
-                            <Button variant="success" type="submit" style={{ width: "100%" }}>Log In</Button>
-                        </Col>
-                    </Row>
-                </form>
-            </Stack>
+
+                    {isValid || (
+                        <Alert variant="danger">{message}</Alert>
+                    )}
+
+                    <Form.Group>
+                        <Row>
+                            <Col>
+                                <Button href="signup" variant="secondary" style={{ width: "100%" }}>Sign Up</Button>
+                            </Col>
+                            <Col>
+                                <Button variant="success" type="submit" style={{ width: "100%" }}>Log In</Button>
+                            </Col>
+                        </Row>
+                    </Form.Group>
+                </Stack>
+            </form>
         </Card >
     );
 }
