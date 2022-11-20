@@ -12,16 +12,17 @@ import { Table, Container, Button, Stack } from "react-bootstrap";
 export default function Employees(props) {
     const cookies = new Cookies();
 
-    const [jwt, setJwt] = useState(cookies.get("jwt"));
+    const jwt = cookies.get("jwt");
     const [employees, setEmployees] = useState([]);
 
     useEffect(() => {
         axios.get("https://comp3123-backend.herokuapp.com/api/emp/employees", {
             headers: { "Authorization": `Bearer ${jwt}` }
         }).then(res => {
-            console.log(res);
             setEmployees(res.data.employees);
         });
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     function generateActionButtons() {
