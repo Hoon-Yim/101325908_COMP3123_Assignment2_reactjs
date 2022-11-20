@@ -1,26 +1,11 @@
-// Modules
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-// Pages
-import Login from "./pages/login";
-import EmployeeList from "./pages/employees";
-
-// Components
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/header";
+import App from "./app";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <Header />
-        <div className="d-flex justify-content-center align-items-center" style={{ height: "80vh" }} >
-            <BrowserRouter>
-                <Routes>
-                    <Route path="" element={<EmployeeList />} />
-                    <Route path="login" element={<Login />} />
-                </Routes>
-            </BrowserRouter>
-        </div>
-    </React.StrictMode >
+        <App />
+    </React.StrictMode>
 );
