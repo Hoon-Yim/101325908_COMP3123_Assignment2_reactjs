@@ -1,5 +1,5 @@
 // Modules
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 
@@ -9,28 +9,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Components
 import { Table, Container, Button, Stack } from "react-bootstrap";
 
-export default class Employees extends React.Component {
-    constructor(props) {
-        super(props);
+export default function Employees() {
+    const cookies = new Cookies();
 
-        const cookies = new Cookies();
+    const [jwt, setJwt] = useState(cookies.get("jwt"));
+    const [employees, setEmployees] = useState([]);
 
-        this.state = {
-            jwt: cookies.get("jwt"),
-            employees: []
-        }
-    }
-
-    componentDidMount() {
+    useEffect(() => {
         axios.get("https://comp3123-backend.herokuapp.com/api/emp/employees", {
-            headers: { "Authorization": `Bearer ${this.state.jwt}` }
+            headers: { "Authorization": `Bearer ${jwt}` }
         }).then(res => {
-            console.log(res);
-            this.setState({ employees: res.data.employees });
+            setEmployees(res.data.employees);
         });
-    }
+    }, []);
 
-    generateActionButtons() {
+    function generateActionButtons() {
         return (
             <Stack direction="horizontal" gap={2}>
                 <Button variant="success">Update</Button>
@@ -40,17 +33,17 @@ export default class Employees extends React.Component {
         )
     }
 
-    generateTableBody() {
+    function generateTableBody() {
         return (
             <tbody>
                 {
-                    this.state.employees.map((employee, i) => {
+                    employees.map((employee, i) => {
                         return (
                             <tr key={i}>
                                 <td>{employee.first_name}</td>
                                 <td>{employee.last_name}</td>
                                 <td>{employee.email}</td>
-                                <td>{this.generateActionButtons()}</td>
+                                <td>{generateActionButtons()}</td>
                             </tr>
                         )
                     })
@@ -59,22 +52,20 @@ export default class Employees extends React.Component {
         )
     }
 
-    render() {
-        return (
-            <Container>
-                <Button className="mb-4" href="/add_employee">Add Employee</Button>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    {this.generateTableBody()}
-                </Table>
-            </Container>
-        );
-    }
+    return (
+        <Container>
+            <Button className="mb-4" href="/add_employee">Add Employee</Button>
+            <Table>
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                {generateTableBody()}
+            </Table>
+        </Container>
+    );
 }
