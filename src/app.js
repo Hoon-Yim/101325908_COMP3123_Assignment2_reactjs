@@ -18,7 +18,8 @@ export default class App extends React.Component {
 
         this.state = {
             jwt: cookies.get("jwt"),
-            user: {}
+            user: {},
+            isAuthenticated: false
         };
     }
 
@@ -26,22 +27,24 @@ export default class App extends React.Component {
         axios.get("https://comp3123-backend.herokuapp.com/api/user/get_logged_in_user", {
             headers: { "Authorization": `Bearer ${this.state.jwt}` }
         }).then(res => {
-            this.setState({ user: res.data.user });
+            this.setState({ user: res.data.user, isAuthenticated: true });
+        }).catch(error => {
+            this.setState({ isAuthenticated: false });
         });
     }
 
     render() {
         return (
             <div>
-                <Header user={this.state.user} />
-                <div className="d-flex justify-content-center align-items-center" style={{ height: "80vh" }} >
-                    <BrowserRouter>
+                <BrowserRouter>
+                    <Header user={this.state.user} isAuthenticated={this.state.isAuthenticated} />
+                    <div className="d-flex justify-content-center align-items-center" style={{ height: "80vh" }} >
                         <Routes>
-                            <Route path="" element={<EmployeeList />} />
-                            <Route path="login" element={<Login />} />
+                            <Route path="/" element={this.state.isAuthenticated && <EmployeeList />} />
+                            <Route path="/login" element={<Login />} />
                         </Routes>
-                    </BrowserRouter>
-                </div>
+                    </div>
+                </BrowserRouter>
             </div>
         )
     }

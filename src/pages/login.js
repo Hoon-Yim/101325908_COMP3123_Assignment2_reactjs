@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 
 // CSS
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // Components
-import { useNavigate } from "react-router-dom";
 import { Card, Form, Button, Stack, Row, Col, Alert } from "react-bootstrap";
 
 export default function Login() {
@@ -17,7 +17,7 @@ export default function Login() {
     const cookies = new Cookies();
     const navigate = useNavigate();
 
-    function handleLogIn(event) {
+    function handleLogin(event) {
         event.preventDefault();
 
         axios.post("https://comp3123-backend.herokuapp.com/api/user/login", {
@@ -36,7 +36,7 @@ export default function Login() {
     return (
         <Card style={{ width: "25rem", padding: "30px 20px" }}>
             <Card.Title className="mb-3">Log In</Card.Title>
-            <form onSubmit={handleLogIn}>
+            <form onSubmit={handleLogin}>
                 <Stack gap={3}>
                     <Form.Group>
                         <Form.Label htmlFor="email_input">Email</Form.Label>
@@ -53,9 +53,7 @@ export default function Login() {
                             type="password" />
                     </Form.Group>
 
-                    {isValid || (
-                        <Alert variant="danger">{message}</Alert>
-                    )}
+                    {isValid || <Alert variant="danger">{message}</Alert>}
 
                     <Form.Group>
                         <Row>
