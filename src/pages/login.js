@@ -26,7 +26,7 @@ export default function Login(props) {
         }).then(res => {
             setIsValid(true);
             cookies.set("jwt", res.data.token, { path: '/' });
-            navigate('/', { isAuthenticated: isValid });
+            navigate('/');
             props.sendAuthenticationState(res.data.user);
         }).catch(error => {
             setIsValid(false);
@@ -37,7 +37,7 @@ export default function Login(props) {
     return (
         <Card style={{ width: "25rem", padding: "30px 20px" }}>
             <Card.Title className="mb-3">Log In</Card.Title>
-            <form onSubmit={handleLogin}>
+            <Form onSubmit={handleLogin}>
                 <Stack gap={3}>
                     <Form.Group>
                         <Form.Label htmlFor="email_input">Email</Form.Label>
@@ -59,7 +59,7 @@ export default function Login(props) {
                     <Form.Group>
                         <Row>
                             <Col>
-                                <Button href="signup" variant="secondary" style={{ width: "100%" }}>Sign Up</Button>
+                                <Button href="/signup" variant="secondary" style={{ width: "100%" }}>Sign Up</Button>
                             </Col>
                             <Col>
                                 <Button variant="success" type="submit" style={{ width: "100%" }}>Log In</Button>
@@ -67,7 +67,7 @@ export default function Login(props) {
                         </Row>
                     </Form.Group>
                 </Stack>
-            </form>
-        </Card >
+            </Form>
+        </Card>
     );
 }

@@ -1,9 +1,11 @@
+// Modules
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 
 // Pages
 import Login from "./pages/login";
+import Signup from "./pages/signup";
 import EmployeeList from "./pages/employees";
 import ErrorPage from "./pages/error";
 
@@ -48,7 +50,8 @@ export default function App() {
                 <div className="d-flex justify-content-center align-items-center" style={{ height: "80vh" }} >
                     <Routes>
                         <Route path="/" element={returnEmployeeListOrError()} />
-                        <Route path="/login" element={<Login sendAuthenticationState={getAuthenticationState} />} />
+                        <Route path="/login" element={<Login sendAuthenticationState={getAuthenticationState}/>} />
+                        <Route path="/signup" element={<Signup sendAuthenticationState={getAuthenticationState}/>} />
                     </Routes>
                 </div>
             </BrowserRouter>
