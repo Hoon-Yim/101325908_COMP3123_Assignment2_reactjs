@@ -35,7 +35,7 @@ export default class Employees extends React.Component {
             <Stack direction="horizontal" gap={2}>
                 <Button variant="success">Update</Button>
                 <Button variant="danger">Delete</Button>
-                <Button variant="light">View</Button>
+                <Button>View</Button>
             </Stack>
         )
     }
@@ -62,6 +62,7 @@ export default class Employees extends React.Component {
     render() {
         return (
             <Container>
+                <Button className="mb-4" href="/add_employee">Add Employee</Button>
                 <Table>
                     <thead>
                         <tr>
