@@ -8,9 +8,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 // Components
 import { Table, Container, Button, Stack } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function Employees(props) {
     const cookies = new Cookies();
+    const navigate = useNavigate();
 
     const jwt = cookies.get("jwt");
     const [employees, setEmployees] = useState([]);
@@ -25,11 +27,19 @@ export default function Employees(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    function generateActionButtons() {
+    function deleteEmployee(employee) {
+        axios.delete(`https://comp3123-backend.herokuapp.com/api/emp/employees?eid=${employee._id}`, {
+            headers: { "Authorization": `Bearer ${jwt}` }
+        }).then(res => {
+            navigate(0);
+        });
+    }
+
+    function generateActionButtons(employee) {
         return (
             <Stack direction="horizontal" gap={2}>
-                <Button variant="success">Update</Button>
-                <Button variant="danger">Delete</Button>
+                <Button href={`/employee/${employee._id}`} variant="success">Update</Button>
+                <Button onClick={() => deleteEmployee(employee)} variant="danger">Delete</Button>
                 <Button>View</Button>
             </Stack>
         )
@@ -45,7 +55,7 @@ export default function Employees(props) {
                                 <td>{employee.first_name}</td>
                                 <td>{employee.last_name}</td>
                                 <td>{employee.email}</td>
-                                <td>{generateActionButtons()}</td>
+                                <td>{generateActionButtons(employee)}</td>
                             </tr>
                         )
                     })
