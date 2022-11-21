@@ -8,6 +8,7 @@ import Login from "./pages/login";
 import Signup from "./pages/signup";
 import EmployeeList from "./pages/employees";
 import ErrorPage from "./pages/error";
+import AddEmployee from "./pages/add_employee";
 
 // Components
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -52,6 +53,7 @@ export default function App() {
                         <Route path="/" element={returnEmployeeListOrError()} />
                         <Route path="/login" element={<Login sendAuthenticationState={getAuthenticationState}/>} />
                         <Route path="/signup" element={<Signup sendAuthenticationState={getAuthenticationState}/>} />
+                        <Route path="/add_employee" element={<AddEmployee />} />
                     </Routes>
                 </div>
             </BrowserRouter>

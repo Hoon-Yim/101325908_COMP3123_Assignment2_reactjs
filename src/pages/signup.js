@@ -88,7 +88,7 @@ export default function Signup(props) {
                                     isInvalid={!isValidEmail} 
                                     required/>
                                 <Form.Control.Feedback type="invalid">
-                                    Please enter an email
+                                    Invalid Email Format
                                 </Form.Control.Feedback>
                             </FloatingLabel>
                         </InputGroup>
