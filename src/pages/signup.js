@@ -28,6 +28,8 @@ export default function Signup(props) {
 
     useEffect(() => {
         checkPasswordIdentity();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [password, passwordConfirm])
 
     function checkPasswordIdentity() {

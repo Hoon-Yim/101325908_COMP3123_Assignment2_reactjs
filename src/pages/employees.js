@@ -30,7 +30,7 @@ export default function Employees(props) {
     function deleteEmployee(employee) {
         axios.delete(`https://comp3123-backend.herokuapp.com/api/emp/employees?eid=${employee._id}`, {
             headers: { "Authorization": `Bearer ${jwt}` }
-        }).then(res => {
+        }).then(() => {
             navigate(0);
         });
     }

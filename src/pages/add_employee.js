@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // CSS
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,34 +13,76 @@ import { Alert, Button, Card, Form, InputGroup, Stack, Row, Col, FloatingLabel }
 // Utils
 import ValidateEmail from "../utils/validate_email";
 
-export default function AddEmployee(props) {
+export default function AddEmployee() {
     const cookies = new Cookies();
     const navigate = useNavigate();
 
-    const [jwt, setJwt] = useState(cookies.get("jwt"));
+    const [jwt] = useState(cookies.get("jwt"));
 
     const [isValid, setIsValid] = useState(true);
     const [message, setMessage] = useState("");
 
+    // retrieve employee information if the use wants to update employee
+    const id = useParams().id;
+
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [gender, setGender] = useState("other");
+    const [salary, setSalary] = useState("");
     const [isValidEmail, setIsValidEmail] = useState(true);
+
+    useEffect(() => {
+        if (id) {
+            axios.get(`https://comp3123-backend.herokuapp.com/api/emp/employees/${id}`, {
+                headers: { "Authorization": `Bearer ${jwt}` },
+            }).then(res => {
+                const employee = {...res.data.employee};
+                setFirstName(employee.first_name);
+                setLastName(employee.last_name);
+                setEmail(employee.email);
+                setGender(employee.gender);
+                setSalary(employee.salary);
+            });
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     function handleSubmit(event) {
         event.preventDefault();
-        
-        axios.post("https://comp3123-backend.herokuapp.com/api/emp/employees", {
-            first_name: event.target.firstname_input.value,
-            last_name: event.target.lastname_input.value,
-            email: event.target.email_input.value,
-            salary: parseFloat(event.target.salary_input.value),
-            gender: event.target.gender_select.value,
-        }, {
-            headers: { "Authorization": `Bearer ${jwt}` },
-        }).then(res => {
-            navigate('/');
-        }).catch(error => {
-            setIsValid(false);
-            setMessage(error.response.data.message);
-        });
+
+        if (id === undefined) { // when creating new employee
+            axios.post("https://comp3123-backend.herokuapp.com/api/emp/employees", {
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                salary: parseFloat(salary),
+                gender: gender
+            }, {
+                headers: { "Authorization": `Bearer ${jwt}` },
+            }).then(() => {
+                navigate('/');
+            }).catch(error => {
+                setIsValid(false);
+                setMessage(error.response.data.message);
+            });
+        } else { // when updating existing employee
+            axios.put(`https://comp3123-backend.herokuapp.com/api/emp/employees/${id}`, {
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                salary: parseFloat(salary),
+                gender: gender
+            }, {
+                headers: { "Authorization": `Bearer ${jwt}` },
+            }).then(res => {
+                navigate('/');
+            }).catch(error => {
+                setIsValid(false);
+                setMessage(error.response.data.message);
+            });
+        }
     }
 
     return(
@@ -53,7 +95,13 @@ export default function AddEmployee(props) {
                             controlId="firstname_input"
                             label="First Name"
                         >
-                            <Form.Control type="text" required />
+                            <Form.Control 
+                                type="text" 
+                                value={firstName} 
+                                onChange={event => {
+                                    setFirstName(event.target.value);
+                                }} 
+                                required />
                         </FloatingLabel>
                     </Form.Group>
 
@@ -62,7 +110,13 @@ export default function AddEmployee(props) {
                             controlId="lastname_input"
                             label="Last Name"
                         >
-                            <Form.Control type="text" required />
+                            <Form.Control 
+                                type="text" 
+                                value={lastName} 
+                                onChange={event => {
+                                    setLastName(event.target.value);
+                                }} 
+                                required />
                         </FloatingLabel>
                     </Form.Group>
 
@@ -74,7 +128,11 @@ export default function AddEmployee(props) {
                             >
                                 <Form.Control 
                                     type="email" 
-                                    onChange={event => setIsValidEmail(ValidateEmail(event.target.value)) }
+                                    value={email}
+                                    onChange={event => {
+                                        setEmail(event.target.value);
+                                        setIsValidEmail(ValidateEmail(event.target.value));
+                                    }}
                                     isInvalid={!isValidEmail} 
                                     required/>
                                 <Form.Control.Feedback type="invalid">
@@ -91,7 +149,12 @@ export default function AddEmployee(props) {
                                     controlId="salary_input"
                                     label="Salary"
                                 >
-                                    <Form.Control type="number" step="0.01" required />
+                                    <Form.Control 
+                                        type="number" 
+                                        value={salary} 
+                                        onChange={event => setSalary(event.target.value) } 
+                                        step="0.01" 
+                                        required />
                                 </FloatingLabel>
                             </Col>
                             <Col>
@@ -99,11 +162,15 @@ export default function AddEmployee(props) {
                                     controlId="gender_select"
                                     label="Gender"
                                 >
-                                    <Form.Select aria-label="something">
+                                    <Form.Control 
+                                        as="select" 
+                                        value={gender} 
+                                        onChange={event => setGender(event.target.value)}
+                                    >
                                         <option value="other">Other</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
-                                    </Form.Select>
+                                    </Form.Control>
                                 </FloatingLabel>
                             </Col>
                         </Row>
@@ -112,7 +179,8 @@ export default function AddEmployee(props) {
                     {isValid || <Alert variant="danger">{message}</Alert>}
 
                     <Form.Group>
-                        <Button variant="success" type="submit" style={{ width: "100%" }}>Add</Button>
+                        <Button variant="success" type="submit" style={{ width: "100%" }}>{(id && "Update") || ("Add")}</Button>
+                        <Button href="/" variant="secondary" style={{ "margin-top": "10px", width: "100%" }}>Cancel</Button>
                     </Form.Group>
                 </Stack>
             </Form>

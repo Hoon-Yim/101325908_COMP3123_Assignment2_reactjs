@@ -54,6 +54,7 @@ export default function App() {
                         <Route path="/login" element={<Login sendAuthenticationState={getAuthenticationState}/>} />
                         <Route path="/signup" element={<Signup sendAuthenticationState={getAuthenticationState}/>} />
                         <Route path="/add_employee" element={<AddEmployee />} />
+                        <Route path="/employee/:id" element={<AddEmployee />} />
                     </Routes>
                 </div>
             </BrowserRouter>
