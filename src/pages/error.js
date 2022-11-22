@@ -14,7 +14,7 @@ export default function Error() {
                 <Card.Title className="mt-2">You are not logged in!</Card.Title>
             </Card.Header>
             <Card.Body>
-                <Card.Text>To view employee list, please log in!</Card.Text>
+                <Card.Text>To access this endpoint, please log in!</Card.Text>
                 <Button href="/login" variant="success" style={{ width: "50%" }}>Log in</Button>
             </Card.Body>
         </Card>
