@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Table, Container, Button, Stack } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-export default function Employees(props) {
+export default function Employees() {
     const cookies = new Cookies();
     const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ export default function Employees(props) {
         });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
     function deleteEmployee(employee) {
         axios.delete(`https://comp3123-backend.herokuapp.com/api/emp/employees?eid=${employee._id}`, {
@@ -38,9 +38,9 @@ export default function Employees(props) {
     function generateActionButtons(employee) {
         return (
             <Stack direction="horizontal" gap={2}>
-                <Button href={`/employee/${employee._id}`} variant="success">Update</Button>
+                <Button href={`/update_employee/${employee._id}`} variant="success">Update</Button>
                 <Button onClick={() => deleteEmployee(employee)} variant="danger">Delete</Button>
-                <Button>View</Button>
+                <Button href={`/employee/${employee._id}`}>View</Button>
             </Stack>
         )
     }

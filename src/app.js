@@ -9,6 +9,7 @@ import Signup from "./pages/signup";
 import EmployeeList from "./pages/employees";
 import ErrorPage from "./pages/error";
 import AddEmployee from "./pages/add_employee";
+import ViewEmployee from "./pages/view_employee";
 
 // Components
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -39,8 +40,8 @@ export default function App() {
         setIsAuthenticated(!isAuthenticated);
     }
 
-    function returnEmployeeListOrError() {
-        if (isAuthenticated) return <EmployeeList />
+    function returnPageOrError(jsx) {
+        if (isAuthenticated) return jsx
         else return <ErrorPage />
     }
 
@@ -50,11 +51,12 @@ export default function App() {
                 <Header user={user} isAuthenticated={isAuthenticated} sendAuthenticationState={getAuthenticationState} />
                 <div className="d-flex justify-content-center align-items-center" style={{ height: "80vh" }} >
                     <Routes>
-                        <Route path="/" element={returnEmployeeListOrError()} />
+                        <Route path="/" element={returnPageOrError(<EmployeeList />)} />
                         <Route path="/login" element={<Login sendAuthenticationState={getAuthenticationState}/>} />
                         <Route path="/signup" element={<Signup sendAuthenticationState={getAuthenticationState}/>} />
-                        <Route path="/add_employee" element={<AddEmployee />} />
-                        <Route path="/employee/:id" element={<AddEmployee />} />
+                        <Route path="/add_employee" element={returnPageOrError(<AddEmployee />)} />
+                        <Route path="/update_employee/:id" element={returnPageOrError(<AddEmployee />)} />
+                        <Route path="/employee/:id" element={returnPageOrError(<ViewEmployee />)} />
                     </Routes>
                 </div>
             </BrowserRouter>
