@@ -1,14 +1,21 @@
 // Modules
-import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// CSS
-import "bootstrap/dist/css/bootstrap.min.css";
-
 // Components
-import { Alert, Button, Card, Form, InputGroup, Stack, Row, Col, FloatingLabel } from "react-bootstrap";
+import {
+    Alert,
+    Button,
+    Card,
+    Col,
+    FloatingLabel,
+    Form,
+    InputGroup,
+    Row,
+    Stack,
+} from "react-bootstrap";
 
 // Utils
 import ValidateEmail from "../utils/validate_email";
@@ -59,18 +66,18 @@ export default function Signup(props) {
         }
     }
 
-    return(
+    return (
         <Card style={{ width: "25rem", padding: "30px 20px" }}>
             <Card.Title className="mb-3">Sign Up</Card.Title>
             <Form validated={false} onSubmit={handleSignup}>
                 <Stack gap={3}>
                     <Form.Group>
                         <InputGroup hasValidation>
-                            <FloatingLabel 
+                            <FloatingLabel
                                 controlId="username_input"
                                 label="Username"
                             >
-                                <Form.Control type="text" required/>
+                                <Form.Control type="text" required />
                                 <Form.Control.Feedback type="invalid">
                                     Please enter a username.
                                 </Form.Control.Feedback>
@@ -84,11 +91,11 @@ export default function Signup(props) {
                                 controlId="email_input"
                                 label="Email"
                             >
-                                <Form.Control 
-                                    type="email" 
+                                <Form.Control
+                                    type="email"
                                     onChange={event => { setIsValidEmail(ValidateEmail(event.target.value)); }}
-                                    isInvalid={!isValidEmail} 
-                                    required/>
+                                    isInvalid={!isValidEmail}
+                                    required />
                                 <Form.Control.Feedback type="invalid">
                                     Invalid Email Format
                                 </Form.Control.Feedback>
@@ -102,10 +109,10 @@ export default function Signup(props) {
                                 controlId="password_input"
                                 label="Password"
                             >
-                                <Form.Control 
-                                    type="password" 
-                                    onChange={event => setPassword(event.target.value)} 
-                                    required/>
+                                <Form.Control
+                                    type="password"
+                                    onChange={event => setPassword(event.target.value)}
+                                    required />
                                 <Form.Control.Feedback type="invalid">
                                     Please enter a password
                                 </Form.Control.Feedback>
@@ -119,11 +126,11 @@ export default function Signup(props) {
                                 controlId="password_confirm_input"
                                 label="Password Confirm"
                             >
-                                <Form.Control 
-                                    type="password" 
-                                    onChange={event => setPasswordConfirm(event.target.value)} 
-                                    isInvalid={!isPasswordMatch} 
-                                    required/>
+                                <Form.Control
+                                    type="password"
+                                    onChange={event => setPasswordConfirm(event.target.value)}
+                                    isInvalid={!isPasswordMatch}
+                                    required />
                                 <Form.Control.Feedback type="invalid">
                                     Password does not match
                                 </Form.Control.Feedback>

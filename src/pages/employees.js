@@ -1,14 +1,16 @@
 // Modules
-import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
-
-// CSS
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Components
-import { Table, Container, Button, Stack } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import {
+    Button,
+    Container,
+    Stack,
+    Table
+} from "react-bootstrap";
 
 export default function Employees() {
     const cookies = new Cookies();

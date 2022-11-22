@@ -4,11 +4,13 @@ import Cookies from "universal-cookie";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-// CSS
-import "bootstrap/dist/css/bootstrap.min.css";
-
 // Components
-import { Card, Stack, Row, Col } from "react-bootstrap";
+import {
+    Card,
+    Col,
+    Row,
+    Stack,
+} from "react-bootstrap";
 
 export default function ViewEmployee() {
     const cookies = new Cookies();

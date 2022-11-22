@@ -1,14 +1,21 @@
 // Modules
-import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-// CSS
-import "bootstrap/dist/css/bootstrap.min.css";
-
 // Components
-import { Alert, Button, Card, Form, InputGroup, Stack, Row, Col, FloatingLabel } from "react-bootstrap";
+import {
+    Alert,
+    Button,
+    Card,
+    Col,
+    FloatingLabel,
+    Form,
+    InputGroup,
+    Row,
+    Stack
+} from "react-bootstrap";
 
 // Utils
 import ValidateEmail from "../utils/validate_email";
@@ -37,7 +44,7 @@ export default function AddEmployee() {
             axios.get(`https://comp3123-backend.herokuapp.com/api/emp/employees/${id}`, {
                 headers: { "Authorization": `Bearer ${jwt}` },
             }).then(res => {
-                const employee = {...res.data.employee};
+                const employee = { ...res.data.employee };
                 setFirstName(employee.first_name);
                 setLastName(employee.last_name);
                 setEmail(employee.email);
@@ -85,7 +92,7 @@ export default function AddEmployee() {
         }
     }
 
-    return(
+    return (
         <Card style={{ width: "25rem", padding: "30px 20px" }}>
             <Card.Title className="mb-3">Add Employee</Card.Title>
             <Form onSubmit={handleSubmit}>
@@ -95,12 +102,12 @@ export default function AddEmployee() {
                             controlId="firstname_input"
                             label="First Name"
                         >
-                            <Form.Control 
-                                type="text" 
-                                value={firstName} 
+                            <Form.Control
+                                type="text"
+                                value={firstName}
                                 onChange={event => {
                                     setFirstName(event.target.value);
-                                }} 
+                                }}
                                 required />
                         </FloatingLabel>
                     </Form.Group>
@@ -110,12 +117,12 @@ export default function AddEmployee() {
                             controlId="lastname_input"
                             label="Last Name"
                         >
-                            <Form.Control 
-                                type="text" 
-                                value={lastName} 
+                            <Form.Control
+                                type="text"
+                                value={lastName}
                                 onChange={event => {
                                     setLastName(event.target.value);
-                                }} 
+                                }}
                                 required />
                         </FloatingLabel>
                     </Form.Group>
@@ -126,15 +133,15 @@ export default function AddEmployee() {
                                 controlId="email_input"
                                 label="Email"
                             >
-                                <Form.Control 
-                                    type="email" 
+                                <Form.Control
+                                    type="email"
                                     value={email}
                                     onChange={event => {
                                         setEmail(event.target.value);
                                         setIsValidEmail(ValidateEmail(event.target.value));
                                     }}
-                                    isInvalid={!isValidEmail} 
-                                    required/>
+                                    isInvalid={!isValidEmail}
+                                    required />
                                 <Form.Control.Feedback type="invalid">
                                     Invalid Email Format
                                 </Form.Control.Feedback>
@@ -149,11 +156,11 @@ export default function AddEmployee() {
                                     controlId="salary_input"
                                     label="Salary"
                                 >
-                                    <Form.Control 
-                                        type="number" 
-                                        value={salary} 
-                                        onChange={event => setSalary(event.target.value) } 
-                                        step="0.01" 
+                                    <Form.Control
+                                        type="number"
+                                        value={salary}
+                                        onChange={event => setSalary(event.target.value)}
+                                        step="0.01"
                                         required />
                                 </FloatingLabel>
                             </Col>
@@ -162,9 +169,9 @@ export default function AddEmployee() {
                                     controlId="gender_select"
                                     label="Gender"
                                 >
-                                    <Form.Control 
-                                        as="select" 
-                                        value={gender} 
+                                    <Form.Control
+                                        as="select"
+                                        value={gender}
                                         onChange={event => setGender(event.target.value)}
                                     >
                                         <option value="other">Other</option>

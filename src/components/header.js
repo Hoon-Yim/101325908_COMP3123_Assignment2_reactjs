@@ -1,13 +1,14 @@
 // Modules
+import Cookies from "universal-cookie";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-// CSS
-import "bootstrap/dist/css/bootstrap.min.css";
-
 // Components
-import { Button, Navbar, Container } from "react-bootstrap";
-import Cookies from "universal-cookie";
+import {
+    Button,
+    Container,
+    Navbar,
+} from "react-bootstrap";
 
 export default function Header(props) {
     const cookies = new Cookies();
@@ -20,13 +21,13 @@ export default function Header(props) {
         props.sendAuthenticationState();
         navigate('/login');
     }
-    
+
     return (
         <Navbar bg="light" expand="lg">
             <Container>
                 <Navbar.Brand href="/">COMP3123 Assignment2</Navbar.Brand>
                 {
-                    props.isAuthenticated && 
+                    props.isAuthenticated &&
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Brand style={{ "marginRight": "10px" }}>
                             {props.user.username}
@@ -35,7 +36,7 @@ export default function Header(props) {
                     </Navbar.Collapse>
                 }
                 {
-                    props.isAuthenticated || 
+                    props.isAuthenticated ||
                     <Navbar.Collapse className="justify-content-end">
                         <Button id="userinfo" variant="outline-success" href="/login">Log in</Button>
                     </Navbar.Collapse>

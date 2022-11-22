@@ -1,14 +1,14 @@
 // Modules
 import React from "react";
 
-// CSS
-import "bootstrap/dist/css/bootstrap.min.css";
-
 // Components
-import { Button, Card } from "react-bootstrap";
+import {
+    Button,
+    Card
+} from "react-bootstrap";
 
 export default function Error() {
-    return(
+    return (
         <Card className="text-center" style={{ width: "25rem" }}>
             <Card.Header>
                 <Card.Title className="mt-2">You are not logged in!</Card.Title>

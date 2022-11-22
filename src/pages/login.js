@@ -1,14 +1,19 @@
 // Modules
-import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// CSS
-import "bootstrap/dist/css/bootstrap.min.css";
-
 // Components
-import { Card, Form, Button, Stack, Row, Col, Alert } from "react-bootstrap";
+import {
+    Alert,
+    Button,
+    Card,
+    Col,
+    Form,
+    Row,
+    Stack
+} from "react-bootstrap";
 
 export default function Login(props) {
     const [isValid, setIsValid] = useState(true);
